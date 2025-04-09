@@ -1,0 +1,68 @@
+stages:
+  data_cleaning:
+    cmd: python src/data/data_cleaning.py
+    deps:
+      - data/raw/swiggy.csv
+      - src/data/data_cleaning.py
+    outs:
+      - data/cleaned/swiggy_cleaned.csv:
+         cache: false
+  data_preparation:
+    cmd: python src/data/data_preperation.py
+    params:
+    - Data_Preparation.test_size
+    - Data_Preparation.random_state
+    deps:
+    - data/cleaned/swiggy_cleaned.csv
+    - src/data/data_preperation.py
+    outs:
+    - data/interim/train.csv:
+       cache: false
+    - data/interim/test.csv:
+       cache: false
+
+  data_preprocessing:
+    cmd: python src/features/data_preprocessing.py
+    deps:
+    - data/interim/train.csv
+    - data/interim/test.csv
+    - src/features/data_preprocessing.py
+    outs:
+    - data/processed/train_trans.csv:
+       cache: false
+    - data/processed/test_trans.csv:
+       cache: false
+    - models/preprocessor.joblib:
+       cache: false
+
+  train:
+    cmd: python src/model/train.py
+    deps:
+    - src/model/train.py
+    - data/processed/train_trans.csv
+    params:
+    - Train.Random_Forest
+    - Train.LightGBM
+    outs:
+    - models/model.joblib:
+       cache: false
+    - models/power_transformer.joblib:
+       cache: false
+    - models/stacking_regressor.joblib:
+       cache: false
+
+  # evaluation:
+  #   cmd: python src/model/evaluation.py
+  #   deps:
+  #   - src/model/evaluation.py
+  #   - data/processed/train_trans.csv
+  #   - data/processed/test_trans.csv
+  #   - models/model.joblib
+  #   outs:
+  #   - run_information.json
+
+#   # register_model:
+#   #   cmd: python src/models/register_model.py
+#   #   deps:
+#   #   - src/models/register_model.py
+#   #   - run_information.json

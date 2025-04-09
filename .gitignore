@@ -1,0 +1,8 @@
+# Ignore model files and data files
+/data/
+/models/
+/logs/
+
+# Python cache
+__pycache__/
+*.pyc
