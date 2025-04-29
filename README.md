@@ -118,3 +118,74 @@ git commit -m "Initialize DVC"
 #setup local remote for dvc
 mkdir -p dvc_storage
 dvc remote add -d local_remote ./dvc_storage
+
+
+
+============
+issue fix SSL_CERT_FILE - IN ACCESING DAGS HUB THIS ISSUE HAPPENS - AS PATH DIFFERENCE OOCUS
+
+export SSL_CERT_FILE="C:/Users/dkcra/miniconda3/envs/fiid_delivery_env_3_11/Library/ssl/cacert.pem"
+set SSL_CERT_FILE=C:\Users\dkcra\miniconda3\envs\fiid_delivery_env_3_11\Library\ssl\cacert.pem
+
+
+==============================================================
+Mlflow:-in production setup
+
+mlflow server \
+  --backend-store-uri postgresql://username:password@host:port/mlflowdb \
+  --default-artifact-root s3://mlflow-artifacts-bucket/artifacts/ \
+  --host 0.0.0.0 \
+  --port 5000
+
+
+  backend-store-uri:
+  MLflow automatically creates all required tables in the backend DB when you first start it with a new database.
+
+These tables handle:
+
+Experiments
+Runs
+Metrics
+Parameters
+Tags
+etc.
+
+
+It will check the DB:
+
+If the mlflowdb is empty → it will create the required schema/tables.
+
+🔹 For S3:
+
+It stores artifact files in the s3://mlflow-artifacts-bucket/artifacts/ path.
+
+Filenames/folder structures are handled by MLflow using the run ID.
+=====================================================
+
+
+python --version
+
+python -m venv myenv
+
+source myenv/Scripts/activate
+
+
+===========
+add remote
+
+dvc remote list
+
+dvc remote add -d myremote s3://food-delivery-time-pred-project-Dhiraj/prefix
+
+dvc status
+
+dvc push
+
+
+----
+Note: So now when we do the git repo then we can have dvc pull to get all the files
+
+
+
+
+

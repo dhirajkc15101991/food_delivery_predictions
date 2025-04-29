@@ -4,7 +4,7 @@ Data_Preparation:
 
 Train:
   Random_Forest:
-    n_estimators: 479
+    n_estimators: 24
     criterion: 'squared_error'
     max_depth: 17
     max_features: 1
@@ -15,7 +15,7 @@ Train:
     n_jobs: -1
   
   LightGBM:
-    n_estimators: 154
+    n_estimators: 23
     max_depth: 27
     learning_rate: 0.22234435854395157
     subsample: 0.7592213724048168

@@ -8,15 +8,10 @@ from sklearn.model_selection import cross_val_score
 from sklearn.metrics import mean_absolute_error, r2_score
 import json
 
-
-# initialize dagshub
-import dagshub
-dagshub.init(repo_owner='himanshu1703', 
-             repo_name='swiggy-delivery-time-prediction', 
-             mlflow=True)
+dagshub.init(repo_owner='dhirajkc15101991', repo_name='food_delivery_predictions', mlflow=True)
 
 # set the mlflow tracking server
-mlflow.set_tracking_uri("https://dagshub.com/himanshu1703/swiggy-delivery-time-prediction.mlflow")
+mlflow.set_tracking_uri("https://dagshub.com/dhirajkc15101991/food_delivery_predictions.mlflow")
 
 # set mlflow experment name
 mlflow.set_experiment("DVC Pipeline")
@@ -78,6 +73,30 @@ if __name__ == "__main__":
     test_data_path = root_path / "data" / "processed" / "test_trans.csv"
     # model path
     model_path = root_path / "models" / "model.joblib"
+
+     ################Logger Start#########################
+    # create logger
+    logger = logging.getLogger("model_evaluation")
+    logger.setLevel(logging.INFO)
+    # console handler
+    stream_handler = logging.StreamHandler()
+    stream_handler.setLevel(logging.INFO)
+    # Create logs directory if not exists and make the file path
+    log_dir = root_path/"logs"
+    log_dir.mkdir(exist_ok=True,parents=True)
+    log_data_cleaning_file_path=log_dir/"model_evaluation.log"
+    #file handler
+    file_handler=logging.FileHandler(log_data_cleaning_file_path)
+    file_handler.setLevel(logging.INFO)
+    # add handler to logger
+    logger.addHandler(stream_handler)
+    logger.addHandler(file_handler)
+    # create a fomratter
+    formatter = logging.Formatter(fmt='%(asctime)s - %(name)s - %(levelname)s - %(message)s')
+    # add formatter to handler
+    stream_handler.setFormatter(formatter)
+    file_handler.setFormatter(formatter)
+    ################Logger End#########################
     
     
     # load the training data
