@@ -4,7 +4,7 @@ Data_Preparation:
 
 Train:
   Random_Forest:
-    n_estimators: 24
+    n_estimators: 20
     criterion: 'squared_error'
     max_depth: 17
     max_features: 1

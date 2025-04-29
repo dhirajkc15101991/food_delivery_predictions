@@ -10,8 +10,8 @@ stages:
     - run_information.json:
         cache: false
 
-#   # register_model:
-#   #   cmd: python src/models/register_model.py
-#   #   deps:
-#   #   - src/models/register_model.py
-#   #   - run_information.json
+  register_model:
+    cmd: python src/model/register_model.py
+    deps:
+    - src/model/register_model.py
+    - run_information.json
